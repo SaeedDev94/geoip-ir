@@ -2,7 +2,8 @@ name: Daily CI
 
 on:
   schedule:
-    - cron: '41 13 * * *'
+    - cron: '0 14 * * *'
+
 jobs:
   new-tag:
     runs-on: ubuntu-latest
