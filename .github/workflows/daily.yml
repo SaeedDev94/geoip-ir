@@ -1,0 +1,26 @@
+name: Daily CI
+
+on:
+  schedule:
+    - cron: '30 13 * * *'
+jobs:
+  new-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set tag
+        run: |
+          DAILY_TAG=$(date +'%Y-%m-%d')
+          echo "DAILY_TAG=$DAILY_TAG" >> $GITHUB_ENV
+      - name: Create Tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {DAILY_TAG} = process.env
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${DAILY_TAG}`,
+              sha: context.sha
+            })
