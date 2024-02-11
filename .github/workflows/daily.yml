@@ -42,8 +42,8 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.env.DAILY_TAG }}
-          name: ${{ github.env.DAILY_TAG }}
+          tag_name: ${{ env.DAILY_TAG }}
+          name: ${{ env.DAILY_TAG }}
           prerelease: false
           draft: false
           files: "publish/*"
