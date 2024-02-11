@@ -2,10 +2,12 @@ name: Daily CI
 
 on:
   schedule:
-    - cron: '30 13 * * *'
+    - cron: '41 13 * * *'
 jobs:
   new-tag:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,3 +26,23 @@ jobs:
               ref: `refs/tags/${DAILY_TAG}`,
               sha: context.sha
             })
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Build geoip.dat
+        run: |
+          go run ./ -c config-ir.json
+      - name: Move files to publish directory
+        run: |
+          mkdir publish
+          mv output/dat/*.dat publish
+          mv output/text/*.txt publish
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.env.DAILY_TAG }}
+          name: ${{ github.env.DAILY_TAG }}
+          prerelease: false
+          draft: false
+          files: "publish/*"
