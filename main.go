@@ -18,6 +18,7 @@ var (
 )
 
 func main() {
+	MkGeo()
 	flag.Parse()
 
 	if *list {
