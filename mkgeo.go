@@ -16,12 +16,12 @@ func MkGeo() {
   today := time.Now().Format("2006-01-02")
   createDirectoryIfNotExists(directory)
   createCountryCsv(directory+"/GeoLite2-Country-Locations-ir.csv")
-  ipv4List, ipv4Error := getFileContent(directory+"/"+today+".ipv4", "https://raw.githubusercontent.com/herrbischoff/country-ip-blocks/master/ipv4/ir.cidr")
+  ipv4List, ipv4Error := getFileContent(directory+"/"+today+".ipv4", "https://herrbischoff.com/code/me/country-ip-blocks/raw/branch/master/ipv4/ir.cidr")
   if ipv4Error != nil {
     fmt.Println("ipv4Error:", ipv4Error)
     return
   }
-  ipv6List, ipv6Error := getFileContent(directory+"/"+today+".ipv6", "https://raw.githubusercontent.com/herrbischoff/country-ip-blocks/master/ipv6/ir.cidr")
+  ipv6List, ipv6Error := getFileContent(directory+"/"+today+".ipv6", "https://herrbischoff.com/code/me/country-ip-blocks/raw/branch/master/ipv6/ir.cidr")
   if ipv6Error != nil {
     fmt.Println("ipv6Error:", ipv6Error)
     return
